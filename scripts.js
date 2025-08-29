@@ -45,21 +45,21 @@ const numbers = [{
     service: "Electricity Help",
     description: "Electricity Assistance",
     category: "Electricity",
-    iconPath: "./assets/emergency.png",
+    iconPath: "./assets/police.png",
     iconBackground: "[#FFE3E2]"
 }, {
     number: 16445,
     service: "Brac Helpline",
     description: "Brac Assistance",
     category: "NGO",
-    iconPath: "./assets/emergency.png",
+    iconPath: "./assets/brac.png",
     iconBackground: "[#FFE3E2]"
 }, {
     number: 163,
     service: "Bangladesh Railway Helpline",
     description: "Bangladesh Railway Assistance",
     category: "Travel",
-    iconPath: "./assets/emergency.png",
+    iconPath: "./assets/Bangladesh-Railway.png",
     iconBackground: "[#FFE3E2]"
 }
 ];
@@ -101,6 +101,8 @@ function createEmergencyCard(emergency, index) {
     `;
     
 }
+
+const historyList = []
 
 const numbersList = document.getElementById("num-list");
 
@@ -149,5 +151,37 @@ callButtons.forEach(button => {
 
         // Alert emergency name and number
         alert(`Calling ${emergency.service} at ${emergency.number}`);
+
+        // Add to call history
+        historyList.push(emergency);
+        updateHistory();
     });
 });
+
+function updateHistory() {
+    const historyListContainer = document.querySelector(".history-list");
+    historyListContainer.innerHTML = ""; // Clear existing history
+
+    historyList.forEach(emergency => {
+        const historyCard = document.createElement("div");
+        historyCard.className = "history-card flex justify-between items-center bg-[#FAFAFA] p-2";
+        historyCard.innerHTML = `
+            <div>
+                <div class="font-semibold">${emergency.service}</div>
+                <div>${emergency.number}</div>
+            </div>
+            <div>
+                ${new Date().toLocaleTimeString()}
+            </div>
+        `;
+        historyListContainer.appendChild(historyCard);
+    });
+}
+
+// Clear call history
+document.getElementById("clear-history").addEventListener("click", () => {
+    historyList.length = 0; // Clear the history array
+    updateHistory(); // Update the displayed history
+});
+
+let copyCount = 0;
