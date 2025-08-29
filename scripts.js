@@ -152,6 +152,9 @@ callButtons.forEach(button => {
         // Alert emergency name and number
         alert(`Calling ${emergency.service} at ${emergency.number}`);
 
+        // Store the time of click
+        emergency.callTime = new Date();
+
         // Add to call history
         historyList.push(emergency);
         updateHistory();
@@ -171,10 +174,11 @@ function updateHistory() {
                 <div>${emergency.number}</div>
             </div>
             <div>
-                ${new Date().toLocaleTimeString()}
+                ${emergency.callTime.toLocaleTimeString()}
             </div>
         `;
         historyListContainer.appendChild(historyCard);
+        console.log(historyListContainer);
     });
 }
 
@@ -196,12 +200,9 @@ document.querySelectorAll(".copy-button").forEach(button => {
         const buttonId = e.currentTarget.parentElement.id;
         const index = buttonId.split("-").pop();
         const emergency = numbers[index];
-        navigator.clipboard.writeText(emergency.number).then(() => {
-            copyCount++;
-            updateCopyCount();
-            alert(`Copied ${emergency.number} to clipboard`);
-        }).catch(err => {
-            console.error('Failed to copy: ', err);
-        });
+        navigator.clipboard.writeText(emergency.number)
+        copyCount++;
+        updateCopyCount();
+        alert(`Copied ${emergency.number} to clipboard`);
     });
 });
