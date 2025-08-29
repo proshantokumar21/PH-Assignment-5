@@ -7,16 +7,50 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Hind+Madurai:wght@300;400;500;600;700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+    </style>
+    <style>
+        .hind-madurai-light {
+        font-family: "Hind Madurai", sans-serif;
+        font-weight: 300;
+        font-style: normal;
+        }
+
+        .hind-madurai-regular {
+        font-family: "Hind Madurai", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        }
+
+        .hind-madurai-medium {
+        font-family: "Hind Madurai", sans-serif;
+        font-weight: 500;
+        font-style: normal;
+        }
+
+        .hind-madurai-semibold {
+        font-family: "Hind Madurai", sans-serif;
+        font-weight: 600;
+        font-style: normal;
+        }
+
+        .hind-madurai-bold {
+        font-family: "Hind Madurai", sans-serif;
+        font-weight: 700;
+        font-style: normal;
+        }
+    </style>
 
 </head>
-<body>
+<body class="hind-madurai-regular">
     <header class="flex flex-col w-full">
         <div class="flex md:justify-between  flex-col md:flex-row items-center justify-center h-[150px] md:h-[100px] gap-y-4" id="navbar">
             <div class="flex items-center">
                 <div class="logo">
                     <img src="assets/logo.png" alt="Logo" class="h-[50px] w-[50px] ml-5 mt-2 mr-3">
                 </div>
-                <h1>Emergency </br> Service</h1>
+                <h1 class="font-bold">Emergency </br> Service</h1>
             </div>
             <nav>
                 <ul class="flex space-x-4 mr-4">
@@ -37,7 +71,17 @@
                 </ul>
             </nav>
         </div>
-        <div id="hero-section"></div>
+        <div id="hero-section" class="flex flex-col items-center justify-center text-center gap-y-4 p-4 bg-gradient-to-r from-[#013223] via-[#006747] to-[#013223] text-white">
+            <div>
+                <img src="./assets/logo.png" alt="Logo" class="h-[92px] w-[92px]">
+            </div>
+            <div class="hind-madurai-semibold text-3xl">
+                Emergency Service Directory
+            </div>
+            <div>
+                Government Emergency Services at Your Fingertip - A Project by Government of the People's Republic of Bangladesh
+            </div>
+        </div>
     </header>
 </body>
 </html>
