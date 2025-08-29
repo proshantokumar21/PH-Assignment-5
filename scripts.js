@@ -6,14 +6,14 @@ const numbers = [{
     iconPath: "./assets/emergency.png",
     iconBackground: "[#FFE3E2]"
 }, {
-    number: 999,
+    number: 199,
     service: "Police Helpline Number",
     description: "Police Assistance",
     category: "Police",
     iconPath: "./assets/police.png",
     iconBackground: "[#DFEFFF]"
 }, {
-    number: 999,
+    number: 1000,
     service: "Fire Service Number",
     description: "Fire Service",
     category: "All",
@@ -66,7 +66,7 @@ const numbers = [{
 
 function createEmergencyCard(emergency, index) {
     return `
-        <div class="shadow-md w-[300px] h-[300px] border-2 bg-white p-4 rounded-2xl flex flex-col justify-between">
+        <div class="shadow-md w-[300px] h-[300px] bg-white p-4 rounded-2xl flex flex-col justify-between">
             <div class="flex items-center justify-between">
                 <div class="rounded-2xl bg-${emergency.iconBackground} w-[60px] h-[60px] flex items-center justify-center">
                     <img src="${emergency.iconPath}" class="w-[50px] h-[50px]">
@@ -89,11 +89,11 @@ function createEmergencyCard(emergency, index) {
             <div class="rounded-3xl bg-gray-300 w-fit px-3 text-gray-600">
                 ${emergency.category}
             </div>
-            <div>
-                <button class="btn rounded-4xl bg-white text-gray-800 w-10/21" onclick="navigator.clipboard.writeText('${emergency.number}')">
+            <div id="button-${index}">
+                <button class="btn rounded-4xl bg-white text-gray-800 w-10/21 copy-button">
                     <i class="fa-regular fa-copy"></i> Copy
                 </button>
-                <button class="btn rounded-4xl bg-[#00A63E] text-white w-10/21 call-button" id="call-button-${index}">
+                <button class="btn rounded-4xl bg-[#00A63E] text-white w-10/21 call-button">
                     <i class="fa-solid fa-phone"></i> Call
                 </button>
             </div>
@@ -130,8 +130,8 @@ const callButtons = document.querySelectorAll(".call-button");
 
 callButtons.forEach(button => {
     button.addEventListener("click", (e) => {
-        // Extract the id of the clicked button
-        const buttonId = e.currentTarget.id;
+        // Extract the id of the parent of the clicked button
+        const buttonId = e.currentTarget.parentElement.id;
         // console.log(buttonId);
         // Extract the index from the button id
         const index = buttonId.split("-").pop();
@@ -185,3 +185,23 @@ document.getElementById("clear-history").addEventListener("click", () => {
 });
 
 let copyCount = 0;
+// Update copy count display
+function updateCopyCount() {
+    document.getElementById("copy-count").innerText = copyCount;
+}
+
+// Handle copy button clicks
+document.querySelectorAll(".copy-button").forEach(button => {
+    button.addEventListener("click", (e) => {
+        const buttonId = e.currentTarget.parentElement.id;
+        const index = buttonId.split("-").pop();
+        const emergency = numbers[index];
+        navigator.clipboard.writeText(emergency.number).then(() => {
+            copyCount++;
+            updateCopyCount();
+            alert(`Copied ${emergency.number} to clipboard`);
+        }).catch(err => {
+            console.error('Failed to copy: ', err);
+        });
+    });
+});
