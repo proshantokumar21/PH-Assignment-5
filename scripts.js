@@ -64,7 +64,7 @@ const numbers = [{
 }
 ];
 
-function createEmergencyCard(emergency) {
+function createEmergencyCard(emergency, index) {
     return `
         <div class="shadow-md w-[300px] h-[300px] border-2 bg-white p-4 rounded-2xl flex flex-col justify-between">
             <div class="flex items-center justify-between">
@@ -93,11 +93,9 @@ function createEmergencyCard(emergency) {
                 <button class="btn rounded-4xl bg-white text-gray-800 w-10/21" onclick="navigator.clipboard.writeText('${emergency.number}')">
                     <i class="fa-regular fa-copy"></i> Copy
                 </button>
-                <a href="tel:${emergency.number}">
-                    <button class="btn rounded-4xl bg-[#00A63E] text-white w-10/21">
-                        <i class="fa-solid fa-phone"></i> Call
-                    </button>
-                </a>
+                <button class="btn rounded-4xl bg-[#00A63E] text-white w-10/21 call-button" id="call-button-${index}">
+                    <i class="fa-solid fa-phone"></i> Call
+                </button>
             </div>
         </div>
     `;
@@ -106,9 +104,10 @@ function createEmergencyCard(emergency) {
 
 const numbersList = document.getElementById("num-list");
 
-numbers.forEach(emergency => {
-    numbersList.innerHTML += createEmergencyCard(emergency);
-});
+for (let i = 0; i < numbers.length; i++) {
+    const emergency = numbers[i];
+    numbersList.innerHTML += createEmergencyCard(emergency, i);
+}
 
 // Select all heart buttons
 const heartButtons = document.querySelectorAll(".heart-button");
@@ -120,5 +119,35 @@ heartButtons.forEach(button => {
         // console.log(currentCount);
         heartCount = currentCount + 1;
         document.getElementById("heart-count").innerText = heartCount;
+    });
+});
+
+// Select all call buttons
+const callButtons = document.querySelectorAll(".call-button");
+// console.log(callButtons);
+
+callButtons.forEach(button => {
+    button.addEventListener("click", (e) => {
+        // Extract the id of the clicked button
+        const buttonId = e.currentTarget.id;
+        // console.log(buttonId);
+        // Extract the index from the button id
+        const index = buttonId.split("-").pop();
+        // console.log(index);
+        const emergency = numbers[index];
+        // Get current coin count
+        const currentCoinCount = parseInt(document.getElementById("coin-count").innerText);
+        // console.log(currentCoinCount);
+        // If current coin count is less than 20, alert the user
+        if (currentCoinCount < 20) {
+            alert("Not enough coins to make a call.");
+            return;
+        }
+
+        // Deduct 20 coins
+        document.getElementById("coin-count").innerText = currentCoinCount - 20;
+
+        // Alert emergency name and number
+        alert(`Calling ${emergency.service} at ${emergency.number}`);
     });
 });
